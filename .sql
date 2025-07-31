@@ -1,0 +1,33 @@
+DROP TABLE IF EXISTS deals;
+DROP TABLE IF EXISTS contacts;
+
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    amo_id BIGINT NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE deals (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    amo_id BIGINT NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    contact_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE
+);
+
+
+INSERT INTO contacts (amo_id, name, phone, email) VALUES
+(1001, 'IVANKA', '+71234567890', 'ivan@example.com'),
+(1002, 'MARINKA', '+79876543210', 'maria@example.com');
+
+
+INSERT INTO deals (amo_id, name, status, contact_id) VALUES
+(2001, 'DEAL 1', 'new', 1),
+(2002, 'DEAL 2', 'in_progress', 2);
